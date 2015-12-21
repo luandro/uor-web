@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {Router} from "react-router";
-import configureStore from "./store.js";
 import { Provider } from 'react-redux';
-import routes from "./routes";
-import RadiumContainer from "./containers/RadiumContainer";
 import { createHistory } from "history";
 import { syncReduxAndRouter } from 'redux-simple-router';
+import configureStore from "./models/store";
+import routes from "./routes";
+import RadiumContainer from "./routes/common/components/RadiumContainer";
 
 let debugSession;
 if(process.env.NODE_ENV !== "production"){
@@ -24,10 +24,10 @@ syncReduxAndRouter(history, store);
  * Fire-up Redux DevTools on a different node.
  */
 
-const devRoot = window.document.getElementById("react-dev");
+const devRoot = window.document.getElementById("tools");
 
 if(process.env.NODE_ENV !== "production"){
-	const DevTools = require('./containers/DevTools')
+	const DevTools = require('./routes/common/components/DevTools')
 	ReactDOM.render(
 			<Provider store={store}>
 				<DevTools />

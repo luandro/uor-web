@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="37px" height="36px" viewBox="0 0 37 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12081) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Main" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="XS---Item" sketch:type="MSArtboardGroup" transform="translate(-396.000000, -13.000000)" fill="#FFFFFF">
+            <g id="Guiala/Item" sketch:type="MSLayerGroup" transform="translate(-0.500000, 0.000000)">
+                <g id="nav" sketch:type="MSShapeGroup">
+                    <g id="Group" transform="translate(397.000000, 13.000000)">
+                        <path d="M28.445625,0.187875 L28.445625,0.807375 L34.82925,0.807375 L8.294625,27.1905 L8.731125,27.63 L35.265,1.248 L35.265,7.62225 L35.884125,7.62225 L35.884125,0.1875" id="Shape"></path>
+                        <path d="M31.165875,35.193375 L0.807,35.193375 L0.807,4.8345 L24.0405,4.8345 L24.0405,4.215 L0.1875,4.215 L0.1875,35.812875 L31.78575,35.812875 L31.78575,12.114375 L31.165875,12.114375 L31.165875,35.193375 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

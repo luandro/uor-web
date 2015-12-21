@@ -1,5 +1,12 @@
 .idea/
 node_modules/
-dist/
+static/dist/
+pouch__all_dbs__/
+example/
+_users/
+_replicator/
+pouch__auth_sessions__/
+log.txt
+npm-debug.log
 *.log
 *.map

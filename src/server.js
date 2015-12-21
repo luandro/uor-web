@@ -5,11 +5,11 @@ import React from "react";
 import ReactDOM from "react-dom/server";
 import {RoutingContext, match} from "react-router";
 import createLocation from "history/lib/createLocation";
-import configureStore from "./store.js";
-import RadiumContainer from './containers/RadiumContainer';
-import { Provider } from 'react-redux';
-import routes from "./routes";
 import url from "url";
+import { Provider } from 'react-redux';
+import configureStore from "./models/store";
+import RadiumContainer from './routes/common/components/RadiumContainer';
+import routes from "./routes";
 
 /**
  * Create Redux store, and get intitial state.
@@ -85,9 +85,9 @@ server.ext("onPreResponse", (request, reply) => {
     return reply.continue();
   }
 
-  //let location = createLocation(request.path);
+  let location = createLocation(request.path);
 
-  match({routes, location: request.path}, (error, redirectLocation, renderProps) => {
+  match({routes, location: location}, (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
       reply.redirect(redirectLocation.pathname + redirectLocation.search)
     }
@@ -109,12 +109,12 @@ server.ext("onPreResponse", (request, reply) => {
 			<html lang="en-us">
 				<head>
 					<meta charset="utf-8">
-					<title>Hapi Universal Redux</title>
+					<title>GuiaLa | Chapada dos Veadeiros</title>
 					<link rel="shortcut icon" href="/favicon.ico">
 				</head>
 				<body>
 					<div id="react-root">${reactString}</div>
-					<div id="react-dev"></div>
+					<div id="tools"></div>
  				<script>
  					window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
  					window.__UA__ = ${JSON.stringify(request.headers['user-agent'])}

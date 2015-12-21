@@ -1,38 +1,181 @@
-![logo](http://i.imgur.com/r8IegDK.jpg)
-![dependencies](https://img.shields.io/david/luandro/hapi-universal-redux.svg?style=flat-square)
-![devDependencies](https://img.shields.io/david/dev/luandro/hapi-universal-redux.svg?style=flat-square)
+Uses
+[express](),
+[passport](),
+[connect-redis](),
+[express-session](),
+[pouchdb](),
+[pouchdb-find]()*,
+[falcor](),
+[falcor-express](),
+[falcor-router](),
+[falcor-http-datasource](?),
+[react](),
+[redux](),
+[redux-promises](?),
+[redux-falcor](https://github.com/ekosz/redux-falcor),
+[redux-pouchdb](),
+[redux-search](),
+[redux-simple-router](),
+[react-router](),
+[react-motion](),
+[react-motion-ui-pack](?),
+[react-headroom](),
+[react-helmet](),
+[react-intl](?),
+[react-portal](),
+[react-maps](?),
+[radium](),
 
-Isomorphic starterkit with server-side React rendering using
-[npm](https://www.npmjs.com/),
-[piping](https://github.com/mdlawson/piping),
-[webpack](https://webpack.github.io/),
-[webpack-dev-server](https://github.com/webpack/webpack-dev-server),
-[react-transform](https://gaearon.github.io/react-hot-loader),
-[hapi.js](http://www.hapijs.com/),
-[babel.js](http://babeljs.io/),
-[react.js](https://facebook.github.io/react),
-[redux](https://github.com/gaearon/redux),
-[redux-devtools](https://github.com/gaearon/redux-devtools),
-[simple-redux-router](https://github.com/jlongster/redux-simple-router),
-[react-router](https://github.com/rackt/react-router),
-[radium](https://github.com/FormidableLabs/radium).
+Development
+[babel](),
+[webpack](),
+[webpack-devserver](),
+[redux-devtools](),
+[react-transform]()
 
 
-![screenshot](http://i.imgur.com/wezOzRd.png)
 
-## Features
+For the first stages of the app, it will use a monolythic server structure running the whole app and api in the same node instance.
 
-- Fully automated with npm run scripts
-- Server hot reloads with piping and Hapi.js
-- Webpack for watch + production builds
-- React.js + Router on the client and server
-- React Transform for instant client updates
-- Babel.js automatically compiles ES6 + ES7
-- React Transmit to preload on server to client
-- Redux for managing app state
-- Radium for advanced inline styling
+Redis will be used to store sessions, PouchDB running with PouchDB-Server will be used for user information data syncing and offline capabilities.
 
-It just works out-of-the-box.
+
+
+
+## Todos
+- Convert server from Hapi to Express
+- If logged pre-fetch user data, user device, user location and locale
+- Server with Passport authentication and session
+- Login component (auth)
+- Server with Falcor API routing
+- Mobile and Desktop navbar component (Link components)
+- Mobile Home component and Desktop List and <aps component (star, add)
+- Mobile and Desktop Item component (star, add)
+- Mobile and Desktop Agenda component (user.agenda)
+- Mobile and Desktop Dashboard component (logged-in)
+- Mobile and Desktop User component (follow, message)
+- Mobile and Desktop Search component (redux-search)
+
+
+## Data model
+```
+User = {
+	_id: string,
+	slug: string,
+	name: string,
+	password: hash,
+	avatar: string,
+	location: {
+		city: string,
+		state: string,
+		country: string,
+	},
+	about: string,
+	starred: [pointItemId: string...],
+	agenda: [{
+		agendaItemId: string,
+		coverId: string,
+		items: [{
+			pointItemId: string,
+			comments: [{
+					userId: string,
+					body: string,
+					votes: int
+			}...],
+			coverId: string,
+			mediaId: [string...],
+			date: string,
+			time: string
+		}...],
+	}...],
+	guide: {
+		verified: bool,
+		credentials: string,
+		regions: [regionId...]
+		comments: [{
+			userId: string,
+			body: string,
+			votes: int
+		}...],
+		intineraries: [agendaItemId: string...],
+		badges: [badgeId: string...]
+
+	}
+	permissions: [{
+		pointItemId: string,
+		role: string
+	}...],
+	followers: [userId...],
+	settings: {
+		locale: string,
+		locationHistory: [string...],
+		currentLocationId: string,
+		monthlyFee: string,
+		cards [{
+			cardNumber: string,
+			cardName: string,
+			cardSafety: int
+		}],
+		paymentHistory: [{
+			date: string,
+			value: int
+		}]
+	},
+	messages: [{
+		userId: string,
+		date: string,
+		seen: bool,
+		body: string
+	}...],
+	notifications: [{
+		pointItemId: string,
+		userId: string,
+		status: string,
+		body: string
+	}...]
+}
+
+Points = [{
+	_id: string,
+	slug: string,
+	rank: int,
+	category: string,
+	title: string,
+	avatar: string,
+	media: [string...],
+	description: string,
+	contact: {
+		email: string,
+		address: string,
+		phones: [string...],
+
+	},
+	location: {
+		placeId: string,
+		regionId: string,
+		lat: int,
+		lng: int
+	},
+	stars: int,
+	added: int,
+	creatorId: string,
+	addons: [string]
+	messages: [{
+		userId: string,
+		date: string,
+		seen: bool,
+		body: string
+	}...],
+	notifications: [{
+		pointItemId: string,
+		userId: string,
+		status: string,
+		body: string
+	}...]
+}...]
+
+
+```
 
 ## Installation
 
@@ -58,4 +201,4 @@ the server-side rendering and client-side hot updates.
 
 ## License
 
-BSD 3-Clause license. Copyright © 2015, Luandro. All rights reserved.
+Copyright © 2015, Moinho Digital. All rights reserved. May not be copied without permission.

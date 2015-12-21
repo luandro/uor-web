@@ -1,0 +1,3 @@
+export const ITEMS_STORE = 'ITEMS_STORE';
+export const ITEMS_STOP_FETCH = 'ITEMS_STOP_FETCH';
+export const ITEMS_START_FETCH = 'ITEMS_START_FETCH';

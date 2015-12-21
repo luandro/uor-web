@@ -1,12 +1,12 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistState } from 'redux-devtools';
 import thunk from 'redux-thunk';
-import rootReducer from './reducers';
+import rootReducer from './rootReducer';
 
 export default function (initialState, debugSession) {
 	let finalCreateStore
 	if(process.env.NODE_ENV !== "production"){
-		const DevTools = require('./containers/DevTools')
+		const DevTools = require('../routes/common/components/DevTools')
 		// Include redux devtools
 		if (debugSession) {
 			// And persist state
@@ -31,8 +31,8 @@ export default function (initialState, debugSession) {
 	const store = finalCreateStore(rootReducer, initialState);
 
 	if(process.env.NODE_ENV !== "production" && module.hot) {
-		module.hot.accept('./reducers', () =>
-			store.replaceReducer(require('./reducers'))
+		module.hot.accept('./rootReducer', () =>
+			store.replaceReducer(require('./rootReducer'))
 		);
 	}
 
