@@ -17,7 +17,16 @@ if(process.env.NODE_ENV !== "production"){
 }
 const store = configureStore(window.__INITIAL_STATE__, debugSession);
 delete window.__INITIAL_STATE__;
-const history = createHistory();
+
+// const history = createHistory();
+// Testing this polyfill, may not be useful
+// https://github.com/rackt/react-router/issues/1402#issuecomment-116723037
+const history = new createHistory();
+if (typeof history.setup === "function") {
+	console.log("history.setup:", history.setup)
+    history.setup();
+}
+
 syncReduxAndRouter(history, store);
 
 /**

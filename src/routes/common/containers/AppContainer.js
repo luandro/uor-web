@@ -1,22 +1,19 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {pushPath} from 'redux-simple-router';
 import falcor from 'falcor';
 import Radium, { Style } from 'radium';
+import Home from '../../Home/containers/HomeContainer.js';
 
-export default class extends Component {
+class App extends Component {
 	componentDidMount() {
-		const model = new falcor.Model({
-		    // source: new falcor.HttpDataSource( 'model.json', {
-		    //     headers: {
-		    //         'Authorization': `bearer ' + token` // JWT
-		    //     },
-		    //     withCredentials: true, // Cookies
-		    //     crossDomain: true // CORS
-		    // })
-		})
-		console.log("window.__UA__:", window.__UA__)
+		const ua = window.__UA__;
+		console.log("window.__UA__:", ua.device.type);
 	}
 	render() {
-		// console.log("require.ensure:", require.ensure)
+		const {dispatch} = this.props;
+		console.log("this.props:", this.props)
+		// console.log("require.ensure:", require.ensure);
 		return (
 			<div style={{width: '100%', height: '100%'}}>
 				<Style rules={{
@@ -36,8 +33,12 @@ export default class extends Component {
 			  		}
 
 				}} />
-				{this.props.children}
+				<button onClick={() => dispatch(pushPath('/home'))}>Home</button>
+				<button onClick={() => dispatch(pushPath('/'))}>Root</button>
+				{this.props.children || 'Welcome'}
 			</div>
 		);
 	}
 }
+
+export default connect()(App)

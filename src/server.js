@@ -6,6 +6,7 @@ import ReactDOM from "react-dom/server";
 import {RoutingContext, match} from "react-router";
 import createLocation from "history/lib/createLocation";
 import url from "url";
+import parser from 'ua-parser-js';
 import { Provider } from 'react-redux';
 import configureStore from "./models/store";
 import RadiumContainer from './routes/common/components/RadiumContainer';
@@ -104,6 +105,8 @@ server.ext("onPreResponse", (request, reply) => {
 		);
 
 		const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
+		const ua = parser(request.headers['user-agent']);
+
 		let output = (
 			`<!doctype html>
 			<html lang="en-us">
@@ -117,9 +120,9 @@ server.ext("onPreResponse", (request, reply) => {
 					<div id="tools"></div>
  				<script>
  					window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
- 					window.__UA__ = ${JSON.stringify(request.headers['user-agent'])}
+ 					window.__UA__ = ${JSON.stringify(ua)}
  				</script>
- 				<script src=${webserver}/dist/client.js></script>
+ 				<script src=${webserver}/dist/main.js></script>
  			</body>
 			</html>`
  		);

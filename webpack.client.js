@@ -1,6 +1,13 @@
 var webpack = require("webpack");
 var path = require("path");
 
+// entry: fs.readdirSync(__dirname).reduce(function (entries, dir) {
+//     if (fs.statSync(path.join(__dirname, dir)).isDirectory())
+//       entries[dir] = path.join(__dirname, dir, 'app.js')
+
+//     return entries
+//   }, {}),
+
 module.exports = {
 	target:  "web",
 	cache:   false,
@@ -9,11 +16,12 @@ module.exports = {
 	entry:   ["./src/client"],
 	output:  {
 		path:          path.join(__dirname, "static/dist"),
-		filename:      "client.js",
+		filename:      "[name].js", //change to hash
 		chunkFilename: "[name].[id].js",
 		publicPath:    "dist/"
 	},
 	plugins: [
+		// new webpack.optimize.CommonsChunkPlugin('shared.js'),
 		new webpack.DefinePlugin({__CLIENT__: true, __SERVER__: false}),
 		new webpack.DefinePlugin({"process.env": {NODE_ENV: '"production"'}}),
 		new webpack.optimize.DedupePlugin(),

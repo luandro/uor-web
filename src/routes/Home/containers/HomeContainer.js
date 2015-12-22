@@ -6,8 +6,7 @@ import React from 'react';
 
 export default ({}) => (
 	<div>
-		{main}
-		{nav}
+		<MobileList />
 	</div>
 )
 

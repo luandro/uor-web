@@ -2,11 +2,12 @@ import React from 'react';
 import {Route, IndexRoute} from 'react-router';
 import App from './common/containers/AppContainer';
 import Home from './Home/containers/HomeContainer';
-import MobileNavBar from './common/components/MobileNavBar';
 
-const isMobile = true;
-let NavBar;
-(isMobile) ? NavBar = <MobileNavBar /> : NavBar = 'Desktop';
+/**
+ * Require.ensure fix for server-side
+ */
+if(typeof require.ensure !== "function") require.ensure = function(d, c) { c(require) };
+
 /**
  * Authentication login
  */
@@ -18,16 +19,36 @@ function checkAuth() {
 /**
  * The React Routes for both the server and the client.
  */
-export default (
-	<Route component={App} onEnter={checkAuth()}>
-		<Route path="/" components={Home}>
-			<IndexRoute components={{main: Home, nav: MobileNavBar}} />
-		</Route>
-	</Route>
-);
+// export default (
+// 	<Route component={App} onEnter={checkAuth()}>
+// 		<Route path="/" component={Home} />
+// 	</Route>
+// );
 // export default  {
 //   component: require('./common/components/App'),
+
+module.exports = {
+  component: 'div',
+  onEnter: checkAuth(),
+  childRoutes: [ {
+    path: '/',
+    component: require('./common/containers/AppContainer'),
+    childRoutes: [
+      require('./Home')
+    ]
+  } ]
+}
+
+//SIMPLE ENSURE
+// module.exports = {
+//   path: '/',
+//   getComponent(location, cb) {
+//     require.ensure([], (require) => {
+//       cb(null, require('./common/containers/AppContainer'))
+//     })
+//   }
 // }
+
 
 // WITH ENSURE
 // export default {

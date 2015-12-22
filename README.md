@@ -20,10 +20,10 @@ Uses
 [react-motion](),
 [react-motion-ui-pack](?),
 [react-headroom](),
-[react-helmet](),
+[react-helmet](https://github.com/nfl/react-helmet),
 [react-intl](?),
 [react-portal](),
-[react-maps](?),
+[react-map-gl](https://github.com/uber/react-map-gl),
 [radium](),
 
 Development
