@@ -21,7 +21,8 @@ class App extends Component {
 			    		margin: 0,
 			    		padding: 0,
 			    		height: '100%',
-			    		width: '100%'
+			    		width: '100%',
+			    		fontFamily: 'Ubuntu'
 			  		},
 			  		'#react-tools': {
 			  			margin: 0,
