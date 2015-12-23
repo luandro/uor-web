@@ -1,17 +1,22 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {pushPath} from 'redux-simple-router';
-import falcor from 'falcor';
+import { retrievePath } from 'redux-falcor';
 import Radium, { Style } from 'radium';
 import Home from '../../Home/containers/HomeContainer.js';
 
 class App extends Component {
+	componentWillMount() {
+		this.props.dispatch(retrievePath('todos[0].name'));
+	}
 	componentDidMount() {
 		const ua = window.__UA__;
 		console.log("window.__UA__:", ua);
+		this.props.dispatch(retrievePath('todos[1].name'));
 	}
 	render() {
-		const {dispatch} = this.props;
+		const {dispatch, children, todos} = this.props;
+		console.log("todos:", todos)
 		return (
 			<div style={{width: '100%', height: '100%'}}>
 				<Style rules={{
@@ -34,10 +39,13 @@ class App extends Component {
 				}} />
 				<button onClick={() => dispatch(pushPath('/home'))}>Home</button>
 				<button onClick={() => dispatch(pushPath('/'))}>Root</button>
-				{this.props.children || 'Welcome'}
+				{children || 'Welcome'}
+				<p>{todos[0].name}</p>
 			</div>
 		);
 	}
 }
 
-export default connect()(App)
+export default connect(
+	state => ({todos: state.entities.todos})
+)(App)

@@ -1,7 +1,28 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistState } from 'redux-devtools';
-import thunk from 'redux-thunk';
+import promiseMiddleware from 'redux-promise-middleware';
+import { createFalcorMiddleware } from 'redux-falcor';
 import rootReducer from './rootReducer';
+import { Model } from 'falcor';
+
+// The falcor model that redux-falcor will query
+const falcor = new Model({
+  cache: {
+     	todos: [
+            {
+                name: 'get milk from corner store',
+                done: false
+            },
+            {
+                name: 'withdraw money from ATM',
+                done: true
+            }
+       	]
+  }
+});
+
+// Middlewares
+const middleware = [promiseMiddleware(), createFalcorMiddleware(falcor)];
 
 export default function (initialState, debugSession) {
 	let finalCreateStore
@@ -11,20 +32,20 @@ export default function (initialState, debugSession) {
 		if (debugSession) {
 			// And persist state
 			finalCreateStore = compose(
-				applyMiddleware(thunk),
+				applyMiddleware(...middleware),
 				DevTools.instrument(),
 				persistState(debugSession)
 			)(createStore);
 		} else {
 			// Don't persist state
 			finalCreateStore = compose(
-				applyMiddleware(thunk),
+				applyMiddleware(...middleware),
 				DevTools.instrument()
 			)(createStore);
 		}
 	} else {
 		finalCreateStore = compose(
-			applyMiddleware(thunk)
+			applyMiddleware(...middleware)
 		)(createStore);
 	}
 

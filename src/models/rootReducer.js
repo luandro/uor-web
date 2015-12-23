@@ -5,10 +5,10 @@ import {items} from './points/reducers/';
 // import {profile} from './user/reducers/';
 
 const rootReducer = combineReducers({
-  items,
-  // profile,
-  routing: routeReducer,
-  entities: falcorReducer
+ 	items,
+	// profile,
+	routing: routeReducer,
+	entities: falcorReducer
 });
 
 export default rootReducer;
