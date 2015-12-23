@@ -92,6 +92,6 @@
     "webpack-dev-server": "^1.14.0"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": "4.2.x"
   }
 }
