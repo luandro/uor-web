@@ -8,12 +8,10 @@ import Home from '../../Home/containers/HomeContainer.js';
 class App extends Component {
 	componentDidMount() {
 		const ua = window.__UA__;
-		console.log("window.__UA__:", ua.device.type);
+		console.log("window.__UA__:", ua);
 	}
 	render() {
 		const {dispatch} = this.props;
-		console.log("this.props:", this.props)
-		// console.log("require.ensure:", require.ensure);
 		return (
 			<div style={{width: '100%', height: '100%'}}>
 				<Style rules={{

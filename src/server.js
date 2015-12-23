@@ -14,7 +14,8 @@ import compression from 'compression';
 import session from 'express-session'
 import path from 'path';
 import PrettyError from 'pretty-error';
-import parser from 'ua-parser-js';
+// Mobile detection
+import isMobile from 'ismobilejs';
 // React, React-Router and Radium
 import React from "react";
 import ReactDOM from "react-dom/server";
@@ -82,9 +83,7 @@ app.use(express.static(staticDir));
  * Catch dynamic requests here to fire-up React Router.
  */
 app.get('*', (req, res, err) => {
-	if(err) {
-		console.log("err:", err)
-	}
+
   	let location = createLocation(req.path);
 
   	match({routes, location: location}, (error, redirectLocation, renderProps) => {
@@ -111,7 +110,7 @@ app.get('*', (req, res, err) => {
 			 * Server-side rendered base html
 			 */
 			const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
-			const ua = parser(req.headers['user-agent']);
+			const ua = isMobile(req.headers['user-agent']).any;
 
 			let output = (
 				`<!doctype html>
@@ -143,6 +142,19 @@ app.get('*', (req, res, err) => {
 					      	s.parentNode.insertBefore(wf, s);
 					   	})(document);
 					</script>
+					<script>
+				      	/*
+				      	if (navigator.serviceWorker) {
+				        	navigator.serviceWorker.register('./worker.js', {
+				          	scope: './'
+				        }).then(function(worker) {
+				          	console.log('Yey!', worker);
+				        }).catch(function(error) {
+				          	console.log('Boo!', error);
+				        });
+				      }
+				      */
+				    </script>
 	 			</body>
 				</html>`
 	 		);
