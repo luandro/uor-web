@@ -17,7 +17,10 @@ const falcor = new Model({
                 name: 'withdraw money from ATM',
                 done: true
             }
-       	]
+       	],
+       	user: {
+       		_id: 1231
+       	}
   }
 });
 
