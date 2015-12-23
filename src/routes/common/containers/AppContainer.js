@@ -2,21 +2,34 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {pushPath} from 'redux-simple-router';
 import { retrievePath } from 'redux-falcor';
+import { prefetch, defer } from 'react-fetcher';
 import Radium, { Style } from 'radium';
 import Home from '../../Home/containers/HomeContainer.js';
 
 class App extends Component {
-	componentWillMount() {
-		this.props.dispatch(retrievePath('todos[0].name'));
-	}
+	// componentWillMount() {
+	// 	if(!this.hasData())
+	// 		this.props.dispatch(retrievePath('todos[0].name'));
+	// }
 	componentDidMount() {
 		const ua = window.__UA__;
 		console.log("window.__UA__:", ua);
 		this.props.dispatch(retrievePath('todos[1].name'));
 	}
-	render() {
+	hasData() {
+		if(this.props.todos) {
+			return true
+		} else {
+			return false
+		}
+	}
+	renderLoader() {
+		return (
+			<p>Loading</p>
+		)
+	}
+	renderComponent() {
 		const {dispatch, children, todos} = this.props;
-		console.log("todos:", todos)
 		return (
 			<div style={{width: '100%', height: '100%'}}>
 				<Style rules={{
@@ -40,9 +53,15 @@ class App extends Component {
 				<button onClick={() => dispatch(pushPath('/home'))}>Home</button>
 				<button onClick={() => dispatch(pushPath('/'))}>Root</button>
 				{children || 'Welcome'}
-				<p>{todos[0].name}</p>
 			</div>
 		);
+	}
+	render() {
+		if(this.hasData()) {
+			return this.renderComponent();
+		} else {
+			return this.renderLoader();
+		}
 	}
 }
 

@@ -16,12 +16,13 @@ import path from 'path';
 import PrettyError from 'pretty-error';
 // Mobile detection
 import isMobile from 'ismobilejs';
-// React, React-Router and Radium
+// React, React-Router for routing, Radium for styles, React-Fetcher for fetching data on the server
 import React from "react";
 import ReactDOM from "react-dom/server";
 import {RoutingContext, match} from "react-router";
 import createLocation from "history/lib/createLocation";
 import RadiumContainer from './routes/common/components/RadiumContainer';
+import { getPrefetchedData } from 'react-fetcher';
 // Redux
 import { Provider } from 'react-redux';
 // Falcor
@@ -48,6 +49,7 @@ const RedisStore = require('connect-redis')(session);
  * Create Redux store, and get intitial state.
  */
 const store = configureStore();
+const { dispatch } = store;
 const initialState = store.getState();
 /**
  * Start Express server on port 8000.
@@ -95,70 +97,89 @@ app.get('*', (req, res, err) => {
 	    	res.status(500);
 	    }
 	    else {
-	    	/**
-	    	 * Server-side rendered React root component
-	    	 */
-			const reactString = ReactDOM.renderToString(
-					<Provider store={store}>
-						<RadiumContainer radiumConfig={{userAgent: req.headers['user-agent']}}>
-							<RoutingContext {...renderProps} />
-						</RadiumContainer>
-					</Provider>
-			);
+	    	// Get array of route components:
+    		const components = renderProps.routes.map(route => route.component);
+    		// Define locals to be provided to all fetcher functions:
+		    const locals = {
+		    	path: renderProps.location.pathname,
+		      	query: renderProps.location.query,
+		      	params: renderProps.params,
 
-			/**
-			 * Server-side rendered base html
-			 */
-			const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
-			const ua = isMobile(req.headers['user-agent']).any;
+		      	// Allow fetcher functions to dispatch Redux actions:
+		      	dispatch
+		    };
 
-			let output = (
-				`<!doctype html>
-				<html lang="en-us">
-					<head>
-						<meta charset="utf-8">
-						<title>GuiaLa | Chapada dos Veadeiros</title>
-						<link rel="shortcut icon" href="/favicon.ico">
-					</head>
-					<body>
-						<div id="react-root">${reactString}</div>
-						<div id="tools"></div>
-	 				<script>
-	 					window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
-	 					window.__UA__ = ${JSON.stringify(ua)}
-	 				</script>
-	 				<script src=${webserver}/dist/main.js></script>
-	 				<script>
-						var WebFontConfig = {
-							google: {
-						        families: [ 'Ubuntu:400,300' ]
-						    },
-						    timeout: 2000
-						};
+		    /**
+		     * Prefetch data
+		     */
+	    	getPrefetchedData(components, locals)
+	    	.then(() => {
+	    		/**
+		    	 * Server-side rendered React root component
+		    	 */
+				const reactString = ReactDOM.renderToString(
+						<Provider store={store}>
+							<RadiumContainer radiumConfig={{userAgent: req.headers['user-agent']}}>
+								<RoutingContext {...renderProps} />
+							</RadiumContainer>
+						</Provider>
+				);
 
-						(function(d) {
-					      	var wf = d.createElement('script'), s = d.scripts[0];
-					      	wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
-					      	s.parentNode.insertBefore(wf, s);
-					   	})(document);
-					</script>
-					<script>
-				      	/*
-				      	if (navigator.serviceWorker) {
-				        	navigator.serviceWorker.register('./worker.js', {
-				          	scope: './'
-				        }).then(function(worker) {
-				          	console.log('Yey!', worker);
-				        }).catch(function(error) {
-				          	console.log('Boo!', error);
-				        });
-				      }
-				      */
-				    </script>
-	 			</body>
-				</html>`
-	 		);
-	    	res.status(200).send(output);
+				/**
+				 * Server-side rendered base html
+				 */
+				const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
+				const ua = isMobile(req.headers['user-agent']).any;
+
+				let output = (
+					`<!doctype html>
+					<html lang="en-us">
+						<head>
+							<meta charset="utf-8">
+							<title>GuiaLa | Chapada dos Veadeiros</title>
+							<link rel="shortcut icon" href="/favicon.ico">
+						</head>
+						<body>
+							<div id="react-root">${reactString}</div>
+							<div id="tools"></div>
+		 				<script>
+		 					window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
+		 					window.__UA__ = ${JSON.stringify(ua)}
+		 				</script>
+		 				<script src=${webserver}/dist/main.js></script>
+		 				<script>
+							var WebFontConfig = {
+								google: {
+							        families: [ 'Ubuntu:400,300' ]
+							    },
+							    timeout: 2000
+							};
+
+							(function(d) {
+						      	var wf = d.createElement('script'), s = d.scripts[0];
+						      	wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+						      	s.parentNode.insertBefore(wf, s);
+						   	})(document);
+						</script>
+						<script>
+					      	/*
+					      	if (navigator.serviceWorker) {
+					        	navigator.serviceWorker.register('./worker.js', {
+					          	scope: './'
+					        }).then(function(worker) {
+					          	console.log('Yey!', worker);
+					        }).catch(function(error) {
+					          	console.log('Boo!', error);
+					        });
+					      }
+					      */
+					    </script>
+		 			</body>
+					</html>`
+		 		);
+		    	res.status(200).send(output);
+
+	    	})
 	    }
   });
 });
