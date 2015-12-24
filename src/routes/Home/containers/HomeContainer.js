@@ -1,12 +1,12 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import MobileList from '../components/MobileList'
+import Home from '../components/Home'
 
 import React from 'react';
 
 export default ({}) => (
 	<div>
-		<MobileList />
+		<Home />
 	</div>
 )
 
@@ -21,4 +21,4 @@ export default ({}) => (
 //   return bindActionCreators(PointActions, dispatch)
 // }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(MobileList)
+// export default connect(mapStateToProps, mapDispatchToProps)(Home)

@@ -1,13 +1,13 @@
 {
-  "name": "guiala-web",
-  "description": "Isomorphic starterkit with server-side React rendering.",
+  "name": "uor-web",
+  "description": "Starterkit with server-side React rendering, React-Router, Redux, Falcor and PouchDB.",
   "version": "0.0.1",
   "license": "BSD-3",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Luandro/guiala-web.git"
+    "url": "https://github.com/Luandro/uor-web.git"
   },
-  "homepage": "https://github.com/Luandro/guiala-web",
+  "homepage": "https://github.com/Luandro/uor-web",
   "keywords": [
     "react",
     "isomorphic",
@@ -15,7 +15,9 @@
     "boilerplate",
     "template",
     "webpack",
-    "hapi"
+    "express",
+    "redux",
+    "falcor"
   ],
   "main": "babel.server.js",
   "scripts": {
@@ -23,9 +25,8 @@
     "build": "node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config webpack.client.js",
     "production": "NODE_ENV=production npm run build && NODE_ENV=production npm run start",
     "pouchdb-server": "pouchdb-server",
-    "redis": "redis-server /usr/local/etc/redis.conf",
     "watch-client": "node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config webpack.client-watch.js && node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.client-watch.js",
-    "dev": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run redis\" \"npm run pouchdb-server\" \"npm run watch-client\" \"npm run start\"",
+    "dev": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run pouchdb-server\" \"npm run watch-client\" \"npm run start\"",
     "postinstall": "webpack -p --config ./webpack.client.js"
   },
   "dependencies": {
@@ -36,7 +37,6 @@
     "babel-preset-react": "^6.1.2",
     "babel-preset-stage-0": "^6.1.2",
     "compression": "^1.6.0",
-    "connect-redis": "^3.0.1",
     "express": "^4.13.3",
     "express-session": "^1.12.1",
     "falcor": "^0.1.15",
@@ -45,7 +45,6 @@
     "history": "1.17.x",
     "http-proxy": "^1.12.0",
     "immutable": "^3.7.6",
-    "ismobilejs": "^0.3.9",
     "passport": "^0.3.2",
     "passport-facebook": "^2.0.0",
     "passport-local": "^1.0.0",
@@ -58,19 +57,14 @@
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-fetcher": "^0.3.0",
-    "react-helmet": "^2.2.0",
-    "react-map-gl": "^0.6.1",
     "react-motion": "^0.3.1",
-    "react-portal": "^1.4.1",
     "react-redux": "^4.0.4",
     "react-router": "^1.0.x",
     "react-tap-event-plugin": "0.2.1",
     "redux": "^3.0.5",
     "redux-falcor": "^2.3.3",
     "redux-promise-middleware": "^2.3.1",
-    "redux-search": "^0.2.0",
     "redux-simple-router": "^1.0.2",
-    "redux-thunk": "^1.0.2",
     "serve-favicon": "^2.3.0",
     "webpack": "^1.12.9"
   },

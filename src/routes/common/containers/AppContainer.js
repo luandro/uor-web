@@ -7,13 +7,7 @@ import Radium, { Style } from 'radium';
 import Home from '../../Home/containers/HomeContainer.js';
 
 class App extends Component {
-	// componentWillMount() {
-	// 	if(!this.hasData())
-	// 		this.props.dispatch(retrievePath('todos[0].name'));
-	// }
 	componentDidMount() {
-		const ua = window.__UA__;
-		console.log("window.__UA__:", ua);
 		this.props.dispatch(retrievePath('todos[1].name'));
 	}
 	hasData() {
@@ -37,8 +31,7 @@ class App extends Component {
 			    		margin: 0,
 			    		padding: 0,
 			    		height: '100%',
-			    		width: '100%',
-			    		fontFamily: 'Ubuntu'
+			    		width: '100%'
 			  		},
 			  		'#react-tools': {
 			  			margin: 0,
@@ -52,7 +45,7 @@ class App extends Component {
 				}} />
 				<button onClick={() => dispatch(pushPath('/home'))}>Home</button>
 				<button onClick={() => dispatch(pushPath('/'))}>Root</button>
-				{children || 'Welcome'}
+				{children || <h1>Welcome</h1>}
 			</div>
 		);
 	}

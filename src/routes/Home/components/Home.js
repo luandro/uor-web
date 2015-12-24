@@ -2,6 +2,6 @@ import React from 'react';
 
 export default ({}) => (
 	<div>
-		<h1>Mobile List</h1>
+		<h1>This is home</h1>
 	</div>
 )

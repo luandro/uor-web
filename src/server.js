@@ -1,12 +1,8 @@
 /**
  * TODO
- * Break this file into smaller services:
- * html render
- * react render
- * redux render
- * falcor routes
+ * Make service worker work
+ * Add web workers
  */
-
 //Node and Express
 import express from "express";
 import favicon from "serve-favicon";
@@ -14,8 +10,6 @@ import compression from 'compression';
 import session from 'express-session'
 import path from 'path';
 import PrettyError from 'pretty-error';
-// Mobile detection
-import isMobile from 'ismobilejs';
 // React, React-Router for routing, Radium for styles, React-Fetcher for fetching data on the server
 import React from "react";
 import ReactDOM from "react-dom/server";
@@ -39,11 +33,6 @@ import localStrategy from 'passport-local';
 // Files
 import routes from "./routes";
 import configureStore from "./models/store";
-
-/**
- * Initiate Redis
- */
-const RedisStore = require('connect-redis')(session);
 
 /**
  * Create Redux store, and get intitial state.
@@ -129,14 +118,13 @@ app.get('*', (req, res, err) => {
 				 * Server-side rendered base html
 				 */
 				const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
-				const ua = isMobile(req.headers['user-agent']).any;
 
 				let output = (
 					`<!doctype html>
 					<html lang="en-us">
 						<head>
 							<meta charset="utf-8">
-							<title>GuiaLa | Chapada dos Veadeiros</title>
+							<title>Universal Offline-First React</title>
 							<link rel="shortcut icon" href="/favicon.ico">
 						</head>
 						<body>
@@ -144,23 +132,8 @@ app.get('*', (req, res, err) => {
 							<div id="tools"></div>
 		 				<script>
 		 					window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
-		 					window.__UA__ = ${JSON.stringify(ua)}
 		 				</script>
 		 				<script src=${webserver}/dist/main.js></script>
-		 				<script>
-							var WebFontConfig = {
-								google: {
-							        families: [ 'Ubuntu:400,300' ]
-							    },
-							    timeout: 2000
-							};
-
-							(function(d) {
-						      	var wf = d.createElement('script'), s = d.scripts[0];
-						      	wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
-						      	s.parentNode.insertBefore(wf, s);
-						   	})(document);
-						</script>
 						<script>
 					      	/*
 					      	if (navigator.serviceWorker) {
