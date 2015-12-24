@@ -38,8 +38,8 @@ Development
 Make sure you're using Node >= 4.0.0.
 
 ```bash
-	git clone https://github.com/luandro/hapi-universal-redux.git
-	cd hapi-universal-redux
+	git clone https://github.com/luandro/uor-web.git
+	cd uor-web
 
 	npm install
 	npm run dev     # start Express server, webpack-dev-server hot server and PouchDB server
