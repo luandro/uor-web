@@ -1,36 +1,26 @@
+This is an ambitious project that aims at creating a boilerplate for [offline-first](https://github.com/pazguille/offline-first) medium/large apps using latest javascript technology.
+
 Uses
-[express](),
-[passport](),
-[express-session](),
-[pouchdb](),
-[pouchdb-find]()*,
-[falcor](),
-[falcor-express](),
-[falcor-router](),
-[falcor-http-datasource](?),
-[react](),
-[redux](),
-[redux-promises](?),
+[express](https://github.com/strongloop/express/),
+[pouchdb](https://github.com/pouchdb/pouchdb),
+[falcor](https://github.com/netflix/falcor),
+[falcor-express](https://github.com/netflix/falcor-express),
+[falcor-router](https://github.com/netflix/falcor-router),
+[falcor-http-datasource](https://github.com/netflix/falcor-http-datasource),
+[react](https://github.com/facebook/react),
+[redux](https://github.com/rackt/redux),
 [redux-falcor](https://github.com/ekosz/redux-falcor),
-[redux-pouchdb](),
-[redux-search](),
-[redux-simple-router](),
-[react-router](),
-[react-motion](),
-[react-motion-ui-pack](?),
-[react-headroom](),
-[react-helmet](https://github.com/nfl/react-helmet),
-[react-intl](?),
-[react-portal](),
-[react-map-gl](https://github.com/uber/react-map-gl),
-[radium](),
+[redux-pouchdb](https://github.com/vicentedealencar/redux-pouchdb),
+[redux-simple-router](https://github.com/rackt/redux-simple-router),
+[react-router](https://github.com/rackt/react-router),
+[react-motion](https://github.com/chenglou/react-motion),
+[radium](https://github.com/FormidableLabs/radium),
 
 Development
-[babel](),
-[webpack](),
-[webpack-devserver](),
-[redux-devtools](),
-[react-transform]()
+[babel](https://babeljs.io/),
+[webpack](https://webpack.github.io),
+[redux-devtools](https://github.com/gaearon/redux-devtools),
+[react-transform](https://github.com/gaearon/babel-plugin-react-transform)
 
 
 ## Installation
